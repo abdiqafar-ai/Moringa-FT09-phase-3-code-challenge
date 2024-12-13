@@ -1,158 +1,170 @@
-# Phase 3 -WK3 - Code Challenge: Articles - with database
+## Magazine Domain Code Challenge
 
-In this code challenge, you will be working with a Magazine domain.
+# Overview
 
-We have three models: `Author`, `Article`, and `Magazine`.
+This project simulates a Magazine domain using a database-backed system with three main models:
 
-For our purposes, an `Author` has many `Article`s, a `Magazine` has many
-`Article`s, and `Article`s belong to both `Author` and `Magazine`.
+Author: Represents an author who writes articles.
 
-`Author` - `Magazine` is a many to many relationship.
+Article: Represents an article written by an author and published in a magazine.
 
-**Note**: You should draw your domain on paper or on a whiteboard _before you
-start coding_. Remember to identify a single source of truth for your data.
+Magazine: Represents a magazine that publishes articles.
 
-## Set Instructions
+The relationships between these models are as follows:
 
-To get started, while inside of this directory.
-  - run `pipenv install` 
-  - run `pipenv shell` to jump into the shell. 
-  - run `python3 app.py` to create the database
+An Author has many Articles.
 
-Build out all of the methods listed in the deliverables. The methods are listed
-in a suggested order, but you can feel free to tackle the ones you think are
-easiest. Be careful: some of the later methods rely on earlier ones.
+A Magazine has many Articles.
 
-<!-- **Remember!** This code challenge has tests to help you check your work. You can
-run `pytest` to make sure your code is functional before submitting. -->
+An Article belongs to both an Author and a Magazine.
 
-The folder structure is as follows:
+Author and Magazine share a many-to-many relationship through Article.
 
-1. On the root folder, we have created the main file and named app.py. make use of it to test your code. You re expected to add more code to test your own implementation.
+This application uses Python, SQLite, and SQLAlchemy to implement database models and methods.
 
-2. Still on the root path, we have the following folders:
-    - database: Here the most important files are the setup.y where you are expected to write your queries to crate the database. in the same folder, there is another file called connection.py where we have proivded the connection string for your database
-    - models: Here we have created 3 files Article.py, Author.py and Magazine.py wehere you are expected to implement your CRUD methods to interact with the database
-    - tests: Here we have provided few tests to guide you with you own tests
+## Setup Instructions
 
-You can add code to the `/app.py` file to define variables and create
-sample instances of your objects.
+Install project dependencies:
 
-Writing error-free code is more important than completing all of the
-deliverables listed - prioritize writing methods that work over writing more
-methods that don't work. You should test your code in the console as you write.
+pipenv install
 
-Similarly, messy code that works is better than clean code that doesn't. First,
-prioritize getting things working. Then, if there is time at the end, refactor
-your code to adhere to best practices. When you encounter duplicated logic,
-extract it into a shared helper method.
+Enter the pipenv shell:
 
-**Before you submit!** Save and run your code to verify that it works as you
-expect. If you have any methods that are not working yet, feel free to leave
-comments describing your progress.
+pipenv shell
 
-## Core Deliverables
+Initialize the database:
 
-Write the following methods in the models(Article, Author, magazine) provided in the models folder. Feel free to build out any helper methods if needed.
+python3 app.py
 
-### Initializers and Properties
+Use the provided test suite to verify your implementation:
 
-#### Author
+pytest
 
-- `Author __init__(self, id, name)`
-  - Author is initialized with a name
-  - This initialization should create a new entry in the database `authors` table
-- `Author property id`
-  - Returns the id of the newly created `Author`
-  - Names must be of type `int`
-  - Remember to use the setter and getter method for easy retrieval, since this will be needed when creating `articles`
-- `Author property name`
-  - Returns the author's name
-  - The value of the name property should derive from the database `authors`. You should makes use of getters and setters methods to manipulate this property.
-  - Names must be of type `str`
-  - Names must be longer than 0 characters
-  - Should **not be able** to change after the author is instantiated.
-  - _hint: hasattr()_
+## Models and Deliverables
 
-#### Magazine
+# Author
 
-- `Magazine __init__(self, id, name, category)`
-  - A magazine is initialized with a name and a category
-  - This initialization should create a new entry in the database `magazines` table 
-- `Author property id`
-  - Returns the id of the newly created `Magazine`
-  - id must be of type `int`
-  - Remember to use the setter and getter method for easy retrieval, since this will be needed when creating `articles`
-- `Magazine property name`
-  - Returns the magazine's name
-  - The value of the name property should derive from the database `magazines`. You should makes use of getters and setters methods to manipulate this property.
-  - Names must be of type `str`
-  - Names must be between 2 and 16 characters, inclusive
-  - Should **be able** to change after the magazine is instantiated.
-- `Magazine property category`
-  - Returns the magazine's category
-  - The value of the category property should derive from the database `magazines`. You should makes use of getters and setters methods to manipulate this property.
-  - Categories must be of type `str`
-  - Categories must be longer than 0 characters
-  - Should **be able** to change after the magazine is instantiated.
+Initialization and Properties
 
-#### Article
+__init__(self, id, name)
 
-- `Article __init__(self, author, magazine, title)`
-  - Article is initialized with an `Author` instance, a `Magazine` instance, and a title. 
+Initializes an Author instance and creates a new entry in the authors table.
 
-  NB: Creating a new entry in the `article` table requires the author and magazine PKs(Primary Keys) as FKs(Foreign Keys). Find a way to retrive the author and maagzine id properties from their respective models then use them here
-  - The initialization should create a new entry in the database `articles` table
-- `Article property title`
-  - Returns the article's title
-  - Titles must be of type `str`
-  - Titles must be between 5 and 50 characters, inclusive
-  - Should **not be able** to change after the article is instantiated.
-  - _hint: hasattr()_
+property id
 
-### Object Relationship Methods and Properties
+Returns the author's ID from the database.
 
-#### Article
+Must be of type int.
 
-- `Article property author`
-  - Write a method in the Article model that returns the author of the article.
-  - You can make use of the SQL JOINS to achieve this
+property name
 
-- `Article property magazine`:
-   - Write a method in the Article model that returns the magazine of the article.
-  - You can make use of the SQL JOINS to achieve this
+Returns the author's name.
 
-#### Author
+Name must be a str and at least 1 character long.
 
-- `Author articles()`
-  - Write a method called articles() in the Author model that will return all articles associated with an author
-  - Remember to make use of the SQL JOINS concept to achieve this
-- `Author magazines()`
-  - Write a method called magazines() in the Author model that will return all magazines associated with an author
-  - Remember to make use of the SQL JOINS concept to achieve this
+Name cannot be changed after instantiation.
 
-#### Magazine
+# Methods
 
-- `Magazine articles()`
-  - Write a method called articles() in the Magazine model that will return all articles associated with a Magazine
-  - Remember to make use of the SQL JOINS concept to achieve this
+articles()
 
-- `Magazine contributors()`
-  - Write a method called contributors() in the Magazine model that will return all Authors associated with a magazine
-  - Remember to make use of the SQL JOINS concept to achieve this
+Returns all articles associated with the author using SQL JOIN.
 
-### Aggregate and Association Methods
+magazines()
 
-#### Magazine
+Returns all magazines associated with the author using SQL JOIN.
 
-- `Magazine article_titles()`
-  - Write a article_titles() method in the magazine model that returns a list of the titles strings of all articles written for that magazine
-  - Returns `None` if the magazine has no articles
-- `Magazine contributing_authors()`
-  - Write a contributing_authors() in the Magazine model that returns a list of authors who have written more than 2 articles for the magazine
-  - Authors must be of type `Author`
-  - Returns `None` if the magazine has no authors with more than 2 publications
+# Magazine
 
+Initialization and Properties
 
+__init__(self, id, name, category)
 
+Initializes a Magazine instance and creates a new entry in the magazines table.
+
+property id
+
+Returns the magazine's ID from the database.
+
+Must be of type int.
+
+property name
+
+Returns and sets the magazine's name.
+
+Name must be a str and between 2 and 16 characters.
+
+property category
+
+Returns and sets the magazine's category.
+
+Category must be a str and at least 1 character long.
+
+# Methods
+
+articles()
+
+Returns all articles associated with the magazine using SQL JOIN.
+
+contributors()
+
+Returns all authors who have written articles for the magazine using SQL JOIN.
+
+article_titles()
+
+Returns a list of article titles for the magazine. Returns None if no articles exist.
+
+contributing_authors()
+
+Returns a list of authors with more than 2 articles for the magazine. Returns None if no such authors exist.
+
+# Article
+
+Initialization and Properties
+
+__init__(self, author, magazine, title)
+
+Initializes an Article instance and creates a new entry in the articles table using the author and magazine IDs as foreign keys.
+
+property title
+
+Returns the article's title.
+
+Title must be a str and between 5 and 50 characters.
+
+Title cannot be changed after instantiation.
+
+# Methods
+
+author
+
+Returns the author of the article using SQL JOIN.
+
+magazine
+
+Returns the magazine of the article using SQL JOIN.
+
+# Development Tips
+
+Draw the domain on paper to understand the relationships between models.
+
+Prioritize working methods over completing all deliverables.
+
+Test each method incrementally as you develop.
+
+# Refactoring
+
+Extract repeated logic into helper methods.
+
+Use Python's getattr() and hasattr() where appropriate to enforce immutability.
+
+Use SQLAlchemy relationships for simplifying joins.
+
+# Testing
+
+Run the test suite to ensure your implementation meets the requirements:
+
+pytest
+
+Ensure all tests pass before submission.
 
