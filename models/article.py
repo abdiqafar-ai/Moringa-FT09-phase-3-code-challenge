@@ -1,18 +1,18 @@
 from database.connection import get_db_connection
 
 class Article:
-    def _init_(self, id, title, content, author_id, magazine_id):
+    def __init__(self, id, title, content, author_id, magazine_id):  # Fixed the method name
         self.id = id
         self.title = title
         self.content = content
         self.author_id = author_id
         self.magazine_id = magazine_id
 
-    def _repr_(self):
+    def __repr__(self):  
         return f'<Article {self.title}>'
 
     def author(self):
-        from models.author import Author  
+        from models.author import Author
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM authors WHERE id = ?', (self.author_id,))
@@ -24,7 +24,7 @@ class Article:
         return None
 
     def magazine(self):
-        from models.magazine import Magazine  
+        from models.magazine import Magazine
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM magazines WHERE id = ?', (self.magazine_id,))
@@ -44,9 +44,10 @@ class Article:
             VALUES (?, ?, ?, ?)
         ''', (title, content, author_id, magazine_id))
         conn.commit()
+        article_id = cursor.lastrowid 
         conn.close()
         
-        return cls(cursor.lastrowid, title, content, author_id, magazine_id)
+        return cls(article_id, title, content, author_id, magazine_id)
 
     def update_article(self, title=None, content=None):
         conn = get_db_connection()
