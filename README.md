@@ -100,7 +100,7 @@ Returns and sets the magazine's category.
 
 Category must be a str and at least 1 character long.
 
-# Methods
+ Methods
 
 articles()
 
@@ -134,7 +134,7 @@ Title must be a str and between 5 and 50 characters.
 
 Title cannot be changed after instantiation.
 
-# Methods
+Methods
 
 author
 
