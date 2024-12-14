@@ -1,10 +1,10 @@
 from database.connection import get_db_connection
 
 class Magazine:
-    def __init__(self, id, name, category):
+    def __init__(self, id, name, category=None):
         self.id = id
         self.name = name
-        self.category = category
+        self.category = category if category else "Default Category" 
 
     def __repr__(self):  
         return f'<Magazine {self.name}>'
@@ -58,7 +58,7 @@ class Magazine:
         
         return [Author(author['id'], author['name']) for author in authors]
 
-    # CRUD operations for Magazine
+
     @classmethod
     def create_magazine(cls, name, category):
         conn = get_db_connection()
